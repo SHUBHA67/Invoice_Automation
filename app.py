@@ -105,7 +105,9 @@ class InvoicePDF(FPDF):
 
         self.ln(5)
         self.set_font("Arial", "I", 9)
-        self.cell(0, 6, f"Amount in words: {num2words(grand_total, to='currency', lang='en_IN').title()}", ln=True)
+        amount_words = num2words(grand_total, lang='en_IN').title() + " Rupees Only"
+        self.cell(0, 6, f"Amount in words: {amount_words}", ln=True)
+
 
     def footer(self):
         self.set_y(-15)
