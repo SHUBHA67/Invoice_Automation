@@ -189,14 +189,27 @@ if menu == "Create Invoice":
 
 elif menu == "View Invoice Database":
     conn = sqlite3.connect(DB_FILE)
-    lst = ['invoice_no', 'date', 'company_name', 'buyer_name', 
-            'total']
-    df = conn.execute("SELECT invoice_no, date, company_name, buyer_name, total FROM invoices").fetchall()
+    data = conn.execute("SELECT invoice_no, date, company_name, buyer_name, total FROM invoices").fetchall()
     conn.close()
 
-    if df:
+    if data:
         st.subheader("📋 Stored Invoices")
-        df1=pd.DataFrame(df,columns=lst)
-        st.dataframe(df1)
+
+        df = pd.DataFrame(data, columns=["Invoice No", "Date", "Company", "Buyer", "Total"])
+        st.dataframe(df)
+
+        selected_invoice = st.selectbox("Select Invoice to Download", df["Invoice No"])
+
+        pdf_path = f"{selected_invoice}.pdf"
+        if os.path.exists(pdf_path):
+            with open(pdf_path, "rb") as f:
+                st.download_button(
+                    label=f"📥 Download Invoice {selected_invoice}",
+                    data=f,
+                    file_name=pdf_path,
+                    mime="application/pdf"
+                )
+        else:
+            st.error("PDF file not found for selected invoice.")
     else:
         st.info("No invoices found.")
