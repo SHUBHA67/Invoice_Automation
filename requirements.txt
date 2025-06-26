@@ -1,5 +1,6 @@
 fpdf
 datetime
 num2words
-os
 pandas
+streamlit
+python-dotenv
