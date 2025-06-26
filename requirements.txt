@@ -1,6 +1,5 @@
 fpdf
 datetime
 num2words
-streamlit
 os
 pandas
