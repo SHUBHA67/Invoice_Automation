@@ -1,0 +1,8 @@
+sqlite3
+fpdf
+datetime
+num2words
+streamlit
+json
+os
+pandas
